@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Bookings - BookMyShow Clone</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+
+</head>
+<body>
+    <header>
+        <div class="logo">BookMyShow</div>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="movies.html">Movies</a></li>
+                <li><a href="events.html">Events</a></li>
+                <li><a href="plays.html">Plays</a></li>
+                <li><a href="sports.html">Sports</a></li>
+                <li><a href="offers.html">Offers</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="view-bookings">
+        <h2>Your Bookings</h2>
+        <div class="booking-list">
+            {% for booking in bookings %}
+            <div class="booking">
+                <p><strong>Movie Name:</strong> {{ booking.movie_name }}</p>
+                <p><strong>Date:</strong> {{ booking.date }}</p>
+                <a href="{{ url_for('update_booking', booking_id=booking.id) }}">Update</a> |
+                <a href="{{ url_for('delete_booking', booking_id=booking.id) }}">Cancel</a>
+            </div>
+            {% endfor %}
+        </div>
+    </section>
+</body>
+</html>
