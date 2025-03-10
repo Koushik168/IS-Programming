@@ -21,3 +21,17 @@ This is a clone of the popular online ticketing platform, **BookMyShow**, built 
 
 /bookmyshow /static /css - styles.css # Main styling file /js - script.js # Main JavaScript file /templates - index.html # Homepage - movies.html # Movies page - events.html # Events page - sports.html # Sports page - plays.html # Plays page - offers.html # Offers page - register.html # User registration page - login.html # User login page - book.html # Booking form - view_bookings.html # View and manage bookings page - update_booking.html # Update booking page app.py # Flask app file
 
+
+## Installation
+
+### Prerequisites
+
+Make sure you have **Python 3.x** installed on your system.
+
+### Steps to Run the Project Locally
+
+1. **Clone the repository**:
+
+   ```bash
+   git clone <repo_url>
+   cd Book-my-show
