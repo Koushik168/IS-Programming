@@ -19,3 +19,5 @@ This is a clone of the popular online ticketing platform, **BookMyShow**, built 
 
 ## Project Structure
 
+/bookmyshow /static /css - styles.css # Main styling file /js - script.js # Main JavaScript file /templates - index.html # Homepage - movies.html # Movies page - events.html # Events page - sports.html # Sports page - plays.html # Plays page - offers.html # Offers page - register.html # User registration page - login.html # User login page - book.html # Booking form - view_bookings.html # View and manage bookings page - update_booking.html # Update booking page app.py # Flask app file
+
