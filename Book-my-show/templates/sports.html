@@ -4,19 +4,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sports - BookMyShow Clone</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+
 </head>
 <body>
     <header>
         <div class="logo">BookMyShow</div>
         <nav>
             <ul>
-                <li><a href="index.html">Home</a></li>
-                <li><a href="movies.html">Movies</a></li>
-                <li><a href="events.html">Events</a></li>
-                <li><a href="plays.html">Plays</a></li>
-                <li><a href="sports.html">Sports</a></li>
-                <li><a href="offers.html">Offers</a></li>
+                <li><a href="{{ url_for('movies') }}">Movies</a></li>
+<li><a href="{{ url_for('events') }}">Events</a></li>
+<li><a href="{{ url_for('plays') }}">Plays</a></li>
+<li><a href="{{ url_for('sports') }}">Sports</a></li>
+<li><a href="{{ url_for('offers') }}">Offers</a></li>
+
             </ul>
         </nav>
     </header>
