@@ -14,36 +14,41 @@
             <nav>
                 <ul>
                     <li><a href="{{ url_for('movies') }}">Movies</a></li>
-                    <li><a href="{{ url_for('events') }}">Events</a></li>
-                    <li><a href="{{ url_for('plays') }}">Plays</a></li>
-                    <li><a href="{{ url_for('sports') }}">Sports</a></li>
-                    <li><a href="{{ url_for('offers') }}">Offers</a></li>                    
+                    <li><a href="{{ url_for('offers') }}">Offers</a></li> 
+                    <li><a href="{{ url_for('view_bookings') }}">My Bookings</a></li>
+                    <li>
+                        <form action="{{ url_for('logout') }}" method="POST">
+                            <button type="submit">Logout</button>
+                        </form>
+                    </li>
+                   
                 </ul>
             </nav>
             <input type="text" placeholder="Search for Movies, Events...">
         </header>
         
         <section class="banner">
-            <img src="banner.jpg" alt="Movie Banner">
+            <img src="{{ url_for('static', filename='images/banner.jpg') }}" alt="Movie Banner">
+
         </section>
         
         <section class="movies">
             <h2>Now Showing</h2>
             <div class="movie-list">
                 <div class="movie">
-                    <img src="movie1.jpg" alt="Movie 1">
+                    <img src="{{ url_for('static', filename='images/movie1.jpg') }}" alt="Movie 1">
                     <h3>Movie Title 1</h3>
-                    <button>Book Now</button>
+                    <a href="{{ url_for('book') }}?movie_name=Movie+Title+1"><button>Book Now</button></a>
                 </div>
                 <div class="movie">
-                    <img src="movie2.jpg" alt="Movie 2">
+                    <img src="{{ url_for('static', filename='images/movie2.jpg') }}" alt="Movie 2">
                     <h3>Movie Title 2</h3>
-                    <button>Book Now</button>
+                    <a href="{{ url_for('book') }}?movie_name=Movie+Title+1"><button>Book Now</button></a>
                 </div>
                 <div class="movie">
-                    <img src="movie3.jpg" alt="Movie 3">
+                    <img src="{{ url_for('static', filename='images/movie3.jpg') }}" alt="Movie 3">
                     <h3>Movie Title 3</h3>
-                    <button>Book Now</button>
+                    <a href="{{ url_for('book') }}?movie_name=Movie+Title+1"><button>Book Now</button></a>
                 </div>
             </div>
         </section>
