@@ -12,11 +12,14 @@
         <div class="logo">BookMyShow</div>
         <nav>
             <ul>
-                <li><a href="{{ url_for('movies') }}">Movies</a></li>
-<li><a href="{{ url_for('events') }}">Events</a></li>
-<li><a href="{{ url_for('plays') }}">Plays</a></li>
-<li><a href="{{ url_for('sports') }}">Sports</a></li>
 <li><a href="{{ url_for('offers') }}">Offers</a></li>
+<li><a href="{{ url_for('view_bookings') }}">My Bookings</a></li>
+<li>
+    <form action="{{ url_for('logout') }}" method="POST">
+        <button type="submit">Logout</button>
+    </form>
+</li>
+
 
             </ul>
         </nav>
@@ -26,26 +29,25 @@
         <h2>Movies Now Showing</h2>
         <div class="movie-list">
             <div class="movie">
-                <img src="movie1.jpg" alt="Movie 1">
+                <img src="{{ url_for('static', filename='images/movie1.jpg') }}" alt="Movie 1">
                 <h3>Fake Movie 1</h3>
                 <p>Genre: Action | Duration: 2hr 30min</p>
-                <button>Book Now</button>
+                <a href="{{ url_for('book') }}?movie_name=Movie+Title+1"><button>Book Now</button></a>
+
             </div>
             <div class="movie">
-                <img src="movie2.jpg" alt="Movie 2">
+                <img src="{{ url_for('static', filename='images/movie2.jpg') }}" alt="Movie 2">
                 <h3>Fake Movie 2</h3>
                 <p>Genre: Comedy | Duration: 1hr 50min</p>
-                <button>Book Now</button>
+                <a href="{{ url_for('book') }}?movie_name=Movie+Title+2"><button>Book Now</button></a>
             </div>
             <div class="movie">
-                <img src="movie3.jpg" alt="Movie 3">
+                <img src="{{ url_for('static', filename='images/movie3.jpg') }}" alt="Movie 3">
                 <h3>Fake Movie 3</h3>
                 <p>Genre: Drama | Duration: 2hr 15min</p>
-                <button>Book Now</button>
+                <a href="{{ url_for('book') }}?movie_name=Movie+Title+3"><button>Book Now</button></a>
             </div>
         </div>
-    </section>
-    
-    
+    </section>    
 </body>
 </html>
