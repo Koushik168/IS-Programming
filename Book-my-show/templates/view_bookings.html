@@ -13,10 +13,12 @@
         <nav>
             <ul>
                 <li><a href="{{ url_for('movies') }}">Movies</a></li>
-<li><a href="{{ url_for('events') }}">Events</a></li>
-<li><a href="{{ url_for('plays') }}">Plays</a></li>
-<li><a href="{{ url_for('sports') }}">Sports</a></li>
 <li><a href="{{ url_for('offers') }}">Offers</a></li>
+<li>
+    <form action="{{ url_for('logout') }}" method="POST">
+        <button type="submit">Logout</button>
+    </form>
+</li>
 
             </ul>
         </nav>
