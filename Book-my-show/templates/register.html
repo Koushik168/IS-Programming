@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Register - BookMyShow Clone</title>
+    <title>Offers - BookMyShow Clone</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
 
 </head>
@@ -12,24 +12,37 @@
         <div class="logo">BookMyShow</div>
         <nav>
             <ul>
-                <li><a href="{{ url_for('login') }}">Login</a></li>
+                <li><a href="{{ url_for('movies') }}">Movies</a></li>
+                <li><a href="{{ url_for('view_bookings') }}">My Bookings</a></li>
+                <li>
+                    <form action="{{ url_for('logout') }}" method="POST">
+                        <button type="submit">Logout</button>
+                    </form>
+                </li>
+
+
             </ul>
         </nav>
     </header>
-
-    <section class="register-form">
-        <h2>Register</h2>
-        <form method="POST">
-            <label for="username">Username</label>
-            <input type="text" name="username" required><br><br>
-
-            <label for="password">Password</label>
-            <input type="password" name="password" required><br><br>
-
-            <button type="submit">Register</button>
-        </form>
-
-        <p>Already have an account? <a href="{{ url_for('login') }}">Login here</a></p>
+    
+    <section class="offers">
+        <h2>Exclusive Offers</h2>
+        <div class="offer-list">
+            <div class="offer">
+                <h3>50% Off on First Booking</h3>
+                <p>Use code: FIRST50 | Valid till: March 31, 2025</p>
+            </div>
+            <div class="offer">
+                <h3>Buy 1 Get 1 Free on Movie Tickets</h3>
+                <p>Applicable on select movies | Valid till: April 15, 2025</p>
+            </div>
+            <div class="offer">
+                <h3>Flat ₹200 Cashback on Event Bookings</h3>
+                <p>Use code: EVENT200 | Valid till: May 10, 2025</p>
+            </div>
+        </div>
     </section>
+    
 </body>
 </html>
+
