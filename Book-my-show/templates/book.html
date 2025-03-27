@@ -5,29 +5,29 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Book Now - BookMyShow Clone</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
-
 </head>
 <body>
     <header>
         <div class="logo">BookMyShow</div>
         <nav>
             <ul>
-                <li><a href="index.html">Home</a></li>
-                <li><a href="movies.html">Movies</a></li>
-                <li><a href="events.html">Events</a></li>
-                <li><a href="plays.html">Plays</a></li>
-                <li><a href="sports.html">Sports</a></li>
-                <li><a href="offers.html">Offers</a></li>
+                <li><a href="{{ url_for('movies') }}">Movies</a></li>
+                <li><a href="{{ url_for('offers') }}">Offers</a></li>
+                <li><a href="{{ url_for('view_bookings') }}">My Bookings</a></li>
+                <li>
+                    <form action="{{ url_for('logout') }}" method="POST">
+                        <button type="submit">Logout</button>
+                    </form>
+                </li>
+
             </ul>
         </nav>
     </header>
 
     <section class="book-form">
-        <h2>Book an Event</h2>
+        <h2>Book for {{ request.args.get('movie_name') }}</h2>
         <form method="POST">
-            <label for="movie_name">Movie Name</label>
-            <input type="text" name="movie_name" required><br><br>
-
+            <input type="hidden" name="movie_name" value="{{ request.args.get('movie_name') }}">
             <label for="date">Date</label>
             <input type="date" name="date" required><br><br>
 
