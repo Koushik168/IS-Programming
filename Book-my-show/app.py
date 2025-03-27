@@ -40,7 +40,6 @@ def home():
     return render_template('index.html')
 
 # User Registration Page
-# User Registration Page
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     if request.method == 'POST':
@@ -87,10 +86,12 @@ def login():
     return render_template('login.html')
 
 # User Logout Page
-@app.route('/logout')
+@app.route('/logout', methods=['POST'])
 def logout():
-    session.pop('user_id', None)  # Remove user from session
-    return redirect(url_for('login'))
+    session.pop('user_id', None)  # Remove 'user_id' from session, logging the user out
+    flash("You have been logged out!", "success")  # Optionally, show a flash message
+    return redirect(url_for('login'))  # Redirect to the login page
+
 
 # Create a Booking
 @app.route('/book', methods=['GET', 'POST'])
@@ -158,6 +159,7 @@ def delete_booking(booking_id):
     return redirect(url_for('view_bookings'))
 
 
+# Additional Routes for Template Pages
 @app.route('/movies')
 def movies():
     return render_template('movies.html')
@@ -166,23 +168,9 @@ def movies():
 def offers():
     return render_template('offers.html')
 
-@app.route('/events')
-def events():
-    return render_template('events.html')
-
-@app.route('/sports')
-def sports():
-    return render_template('sports.html')
-
-@app.route('/plays')
-def plays():
-    return render_template('plays.html')
-
-
 @app.route('/index')
 def index():
     return render_template('index.html')
-
 
 # Run the application
 if __name__ == '__main__':
