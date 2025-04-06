@@ -1,18 +1,32 @@
+/* Global Styles */
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Roboto', sans-serif; /* Changed font to a more modern, clean font */
     margin: 0;
     padding: 0;
-    background-color: #e6f2ff;
-    color: #003366;
+    background-color: #f4f7fc; /* Lighter background color */
+    color: #333; /* Darker text for better contrast */
 }
 
+/* Header Styles */
 header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 15px 50px;
-    background-color: #004080;
+    padding: 20px 50px;
+    background-color: #004080; /* Deep blue background for the header */
     color: white;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Added shadow for depth */
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+}
+
+header .logo {
+    font-size: 24px;
+    font-weight: bold;
+    letter-spacing: 1px;
 }
 
 nav ul {
@@ -22,64 +36,131 @@ nav ul {
 }
 
 nav ul li {
-    margin-right: 20px;
+    margin-right: 25px;
 }
 
 nav ul li a {
     text-decoration: none;
     color: white;
-    font-weight: bold;
+    font-weight: 600;
+    font-size: 16px;
+    transition: color 0.3s ease-in-out;
 }
 
+nav ul li a:hover {
+    color: #ffd700; /* Gold color on hover */
+}
+
+/* Banner Section */
 .banner img {
     width: 100%;
     height: auto;
+    object-fit: cover;
+    border-bottom: 5px solid #004080; /* Add a line under the banner */
 }
 
+/* Movies Section */
 .movies {
-    padding: 20px;
+    padding: 100px 20px 20px 20px; /* Add padding to avoid overlap with fixed header */
     text-align: center;
+    background-color: #e6f2ff;
+}
+
+.movies h2 {
+    font-size: 28px;
+    color: #004080;
+    margin-bottom: 20px;
 }
 
 .movie-list {
     display: flex;
     justify-content: center;
-    gap: 20px;
+    gap: 30px;
+    flex-wrap: wrap;
+    margin-top: 20px;
 }
 
 .movie {
-    background: white;
-    padding: 10px;
-    border-radius: 8px;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
-    max-width: 200px;
+    background: #fff;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.1); /* Slightly stronger shadow for depth */
+    max-width: 250px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .movie img {
     width: 100%;
-    border-radius: 5px;
+    height: auto;
+    border-radius: 8px;
+    margin-bottom: 15px;
+}
+
+.movie:hover {
+    transform: translateY(-5px); /* Add a hover effect to lift the movie card */
+    box-shadow: 0px 12px 25px rgba(0, 0, 0, 0.1); /* Add stronger shadow on hover */
+}
+
+.movie h3 {
+    font-size: 18px;
+    margin-bottom: 10px;
 }
 
 .book-btn {
     background-color: #0066cc;
     color: white;
     border: none;
-    padding: 10px;
+    padding: 12px;
     width: 100%;
     margin-top: 10px;
     cursor: pointer;
     border-radius: 5px;
     font-size: 16px;
+    transition: background-color 0.3s ease;
 }
 
 .book-btn:hover {
-    background-color: #004080;
+    background-color: #004080; /* Darker blue on hover */
 }
 
+/* Footer Section */
 footer {
     text-align: center;
-    padding: 10px;
-    background: #003366;
+    padding: 15px;
+    background: #003366; /* Dark blue footer */
     color: white;
-    margin-top: 20px;
+    margin-top: 30px;
+    font-size: 14px;
+    letter-spacing: 1px;
+}
+
+footer a {
+    color: #ffd700; /* Gold color for footer links */
+    text-decoration: none;
+    font-weight: bold;
+}
+
+footer a:hover {
+    text-decoration: underline;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    header {
+        padding: 15px 20px;
+    }
+
+    nav ul li {
+        margin-right: 15px;
+    }
+
+    .movie-list {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .movie {
+        max-width: 300px;
+        margin: 0 auto;
+    }
 }
