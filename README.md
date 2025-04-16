@@ -9,8 +9,8 @@ This is a clone of the popular online ticketing platform, **BookMyShow**, built 
   - Password hashing using `pbkdf2:sha256`.
 
 - **Booking System**:
-  - View movies, events, plays, sports, and offers.
-  - Book tickets for events, movies, and other activities.
+  - View offers.
+  - Book tickets for movies.
   - View and manage bookings (update or cancel).
 
 - **Responsive Design**:
