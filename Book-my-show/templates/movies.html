@@ -3,7 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Movies - BookMyShow Clone</title>
+    <title>BookMyShow Clone</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+
     <style>
         /* Global Styles */
         body {
@@ -59,9 +61,25 @@
             color: #ffd700; /* Gold on hover */
         }
 
+        /* Search Bar Styles */
+        .search-bar {
+            margin-top: 80px; /* Adjusted to appear below the header */
+            margin-bottom: 30px;
+            text-align: center;
+            width: 100%;
+        }
+
+        .search-bar input {
+            padding: 10px;
+            font-size: 16px;
+            width: 80%;
+            max-width: 500px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
         /* Movies Section */
         .movies {
-            margin-top: 100px; /* Add space below the header */
             padding: 40px;
             width: 100%;
             max-width: 1200px;
@@ -156,44 +174,99 @@
     </style>
 </head>
 <body>
-    <header>
-        <div class="logo">BookMyShow</div>
-        <nav>
-            <ul>
-                <li><a href="{{ url_for('offers') }}">Offers</a></li>
-                <li><a href="{{ url_for('view_bookings') }}">My Bookings</a></li>
-                <li>
-                    <form action="{{ url_for('logout') }}" method="POST">
-                        <button type="submit">Logout</button>
-                    </form>
-                </li>
-            </ul>
-        </nav>
-    </header>
-    
-    <!-- Movies Section -->
-    <section class="movies">
-        <h2>Movies Now Showing</h2>
-        <div class="movie-list">
-            <div class="movie">
-                <img src="{{ url_for('static', filename='images/movie1.jpg') }}" alt="Movie 1">
-                <h3>Fake Movie 1</h3>
-                <p>Genre: Action | Duration: 2hr 30min</p>
-                <a href="{{ url_for('book') }}?movie_name=Movie+Title+1"><button>Book Now</button></a>
+    <div class="wrapper">
+        <header>
+            <div class="logo">BookMyShow</div>
+            <nav>
+                <ul>
+                    <li><a href="{{ url_for('offers') }}">Offers</a></li>
+                    <li><a href="{{ url_for('view_bookings') }}">My Bookings</a></li>
+                    <li>
+                        <form action="{{ url_for('logout') }}" method="POST">
+                            <button type="submit">Logout</button>
+                        </form>
+                    </li>
+                </ul>
+            </nav>
+        </header>
+        
+        <!-- Search Bar Section -->
+        <section class="search-bar">
+            <input type="text" id="searchInput" placeholder="Search for Movies...">
+        </section>
+
+        <section class="movies">
+            <h2>Now Showing</h2>
+            <div class="movie-list" id="movieList">
+                <!-- Movies will be populated here dynamically -->
+                <!-- Example of static movies to be replaced with dynamic content -->
+                <div class="movie">
+                    <img src="{{ url_for('static', filename='images/movie1.jpg') }}" alt="Movie 1">
+                    <h3>Kalki</h3>
+                    <a href="{{ url_for('book') }}?movie_name=Movie+Title+1"><button>Book Now</button></a>
+                </div>
+                <div class="movie">
+                    <img src="{{ url_for('static', filename='images/movie2.jpg') }}" alt="Movie 2">
+                    <h3>Robhinhood</h3>
+                    <a href="{{ url_for('book') }}?movie_name=Movie+Title+2"><button>Book Now</button></a>
+                </div>
+                <div class="movie">
+                    <img src="{{ url_for('static', filename='images/movie3.jpg') }}" alt="Movie 3">
+                    <h3>Minekraft</h3>
+                    <a href="{{ url_for('book') }}?movie_name=Movie+Title+3"><button>Book Now</button></a>
+                </div>
             </div>
-            <div class="movie">
-                <img src="{{ url_for('static', filename='images/movie2.jpg') }}" alt="Movie 2">
-                <h3>Fake Movie 2</h3>
-                <p>Genre: Comedy | Duration: 1hr 50min</p>
-                <a href="{{ url_for('book') }}?movie_name=Movie+Title+2"><button>Book Now</button></a>
-            </div>
-            <div class="movie">
-                <img src="{{ url_for('static', filename='images/movie3.jpg') }}" alt="Movie 3">
-                <h3>Fake Movie 3</h3>
-                <p>Genre: Drama | Duration: 2hr 15min</p>
-                <a href="{{ url_for('book') }}?movie_name=Movie+Title+3"><button>Book Now</button></a>
-            </div>
-        </div>
-    </section>    
+        </section>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const searchInput = document.getElementById('searchInput');
+            const movieListContainer = document.getElementById('movieList');
+
+            // Fake movie data
+            const fakeMovies = [
+                { title: "Movie Title 1", image_url: "/static/images/movie1.jpg", genre: "Action", duration: "2hr 30min" },
+                { title: "Movie Title 2", image_url: "/static/images/movie2.jpg", genre: "Comedy", duration: "1hr 50min" },
+                { title: "Movie Title 3", image_url: "/static/images/movie3.jpg", genre: "Drama", duration: "2hr 15min" }
+            ];
+
+            // Function to display movies
+            function displayMovies(movies) {
+                movieListContainer.innerHTML = "";  // Clear previous results
+
+                if (movies.length === 0) {
+                    movieListContainer.innerHTML = "<p>No movies found.</p>";
+                } else {
+                    movies.forEach(movie => {
+                        const movieDiv = document.createElement('div');
+                        movieDiv.classList.add('movie');
+                        movieDiv.innerHTML = `
+                            <img src="${movie.image_url}" alt="${movie.title}">
+                            <h3>${movie.title}</h3>
+                            <p>Genre: ${movie.genre} | Duration: ${movie.duration}</p>
+                            <a href="/book?movie_name=${movie.title}"><button>Book Now</button></a>
+                        `;
+                        movieListContainer.appendChild(movieDiv);
+                    });
+                }
+            }
+
+            // Display default movies on load
+            displayMovies(fakeMovies);
+
+            // Search functionality
+            searchInput.addEventListener("input", function () {
+                const query = searchInput.value.trim().toLowerCase();
+
+                // Filter movies based on the search query
+                const filteredMovies = fakeMovies.filter(movie => 
+                    movie.title.toLowerCase().includes(query)
+                );
+
+                displayMovies(filteredMovies);
+            });
+        });
+    </script>
 </body>
 </html>

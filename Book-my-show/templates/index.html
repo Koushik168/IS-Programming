@@ -6,6 +6,22 @@
     <title>BookMyShow Clone</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
 
+    <style>
+        /* Additional styles for search bar */
+        .search-bar {
+            margin: 20px auto;
+            text-align: center;
+        }
+
+        .search-bar input {
+            padding: 10px;
+            font-size: 16px;
+            width: 80%;
+            max-width: 500px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+    </style>
 </head>
 <body>
     <div class="wrapper">
@@ -21,19 +37,23 @@
                             <button type="submit">Logout</button>
                         </form>
                     </li>
-                   
                 </ul>
             </nav>
         </header>
         
+        <!-- Search Bar Section -->
+        <section class="search-bar">
+            <input type="text" id="searchInput" placeholder="Search for Movies...">
+        </section>
+
         <section class="banner">
             <img src="{{ url_for('static', filename='images/banner.jpg') }}" alt="Movie Banner">
-
         </section>
         
         <section class="movies">
             <h2>Now Showing</h2>
-            <div class="movie-list">
+            <div class="movie-list" id="movieList">
+                <!-- Movies will be populated here dynamically -->
                 <div class="movie">
                     <img src="{{ url_for('static', filename='images/movie1.jpg') }}" alt="Movie 1">
                     <h3>Movie Title 1</h3>
@@ -53,6 +73,64 @@
         </section>
     </div>
 
-    <script src="script.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const searchInput = document.getElementById('searchInput');
+            const movieListContainer = document.getElementById('movieList');
+
+            // Default list of fake movies
+            const defaultMovies = [
+                { title: "Movie Title 1", image_url: "/static/images/movie1.jpg", genre: "Action", duration: "2hr 30min" },
+                { title: "Movie Title 2", image_url: "/static/images/movie2.jpg", genre: "Comedy", duration: "1hr 50min" },
+                { title: "Movie Title 3", image_url: "/static/images/movie3.jpg", genre: "Drama", duration: "2hr 15min" }
+            ];
+
+            // Function to display movies
+            function displayMovies(movies) {
+                movieListContainer.innerHTML = "";  // Clear previous results
+
+                if (movies.length === 0) {
+                    movieListContainer.innerHTML = "<p>No movies found.</p>";
+                } else {
+                    movies.forEach(movie => {
+                        const movieDiv = document.createElement('div');
+                        movieDiv.classList.add('movie');
+                        movieDiv.innerHTML = `
+                            <img src="${movie.image_url}" alt="${movie.title}">
+                            <h3>${movie.title}</h3>
+                            <p>Genre: ${movie.genre} | Duration: ${movie.duration}</p>
+                            <a href="/book?movie_name=${movie.title}"><button>Book Now</button></a>
+                        `;
+                        movieListContainer.appendChild(movieDiv);
+                    });
+                }
+            }
+
+            // Search functionality
+            searchInput.addEventListener("input", function () {
+                const query = searchInput.value.trim();
+
+                if (query === "") {
+                    // Display default movies if the search query is empty
+                    displayMovies(defaultMovies);
+                    return;
+                }
+
+                // Call API to search for movies
+                fetch(`/api/search_movies?query=${query}`)
+                    .then(response => response.json())
+                    .then(movies => {
+                        displayMovies(movies);
+                    })
+                    .catch(error => {
+                        console.error('Error fetching movies:', error);
+                        movieListContainer.innerHTML = "<p>Failed to fetch movies.</p>";
+                    });
+            });
+
+            // Initially display default movies
+            displayMovies(defaultMovies);
+        });
+    </script>
 </body>
 </html>
