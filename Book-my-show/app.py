@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for, session, flash
+from flask import Flask, render_template, request, redirect, url_for, session, flash, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import generate_password_hash, check_password_hash
 
@@ -13,11 +13,17 @@ app.secret_key = 'your_secret_key'  # Set your secret key for session management
 # Initialize SQLAlchemy
 db = SQLAlchemy(app)
 
-# Database model for Users
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(150), unique=True, nullable=False)
     password = db.Column(db.String(150), nullable=False)
+
+# Database model for Movies
+class Movie(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(150), nullable=False)
+    image_url = db.Column(db.String(250), nullable=True)  # Optional field for image URL
+    description = db.Column(db.String(500), nullable=True)  # Optional field for description
 
 # Database model for Bookings
 class Booking(db.Model):
@@ -92,12 +98,14 @@ def logout():
     flash("You have been logged out!", "success")  # Optionally, show a flash message
     return redirect(url_for('login'))  # Redirect to the login page
 
-
 # Create a Booking
 @app.route('/book', methods=['GET', 'POST'])
 def book():
     if 'user_id' not in session:
         return redirect(url_for('login'))
+
+    # Get movie_name from query string (if available)
+    movie_name = request.args.get('movie_name')
 
     if request.method == 'POST':
         movie_name = request.form['movie_name']
@@ -111,7 +119,8 @@ def book():
         flash("Booking Created!", "success")
         return redirect(url_for('view_bookings'))
 
-    return render_template('book.html')
+    # If movie_name exists in the query parameters, display it
+    return render_template('book.html', movie_name=movie_name)
 
 # View all User's Bookings
 @app.route('/view_bookings')
@@ -158,6 +167,38 @@ def delete_booking(booking_id):
     flash("Booking Canceled!", "success")
     return redirect(url_for('view_bookings'))
 
+# API Route to fetch all user bookings in JSON format
+@app.route('/api/view_bookings', methods=['GET'])
+def api_view_bookings():
+    if 'user_id' not in session:
+        return jsonify({"error": "Not logged in"}), 401  # Unauthorized if no user_id in session
+    
+    user_bookings = Booking.query.filter_by(user_id=session['user_id']).all()  # Fetch bookings for the user
+    
+    if not user_bookings:
+        return jsonify({"message": "No bookings found."}), 200  # No bookings for the user
+
+    # Prepare booking data for JSON response
+    bookings_data = [
+        {"id": booking.id, "movie_name": booking.movie_name, "date": booking.date}
+        for booking in user_bookings
+    ]
+    return jsonify(bookings_data), 200 # Return the list of bookings as JSON
+
+@app.route('/api/search_movies', methods=['GET'])
+def search_movies():
+    query = request.args.get('query')  # Get the query parameter from the URL
+    
+    if not query:
+        return jsonify({"error": "No search query provided"}), 400  # Bad request if no query
+
+    # Search for movies from the database that match the query (case-insensitive)
+    movies = Movie.query.filter(Movie.title.ilike(f"%{query}%")).all()
+
+    # Prepare the data to send back as JSON
+    movies_data = [{"id": movie.id, "title": movie.title, "image_url": movie.image_url} for movie in movies]
+    return jsonify(movies_data)
+
 
 # Additional Routes for Template Pages
 @app.route('/movies')
@@ -174,5 +215,4 @@ def index():
 
 # Run the application
 if __name__ == '__main__':
-    app.run(debug=True)
-
+    app.run(debug=True, host='0.0.0.0')
