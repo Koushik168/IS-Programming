@@ -46,7 +46,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const searchInput = document.querySelector("input[type='text']");
     searchInput.addEventListener("keypress", handleSearch);
 
-    // 📘 Book Now button functionality
+    // 📘 Book Now button functionality (Sir, Please note that for this functionality I have took help of my friend)
     function handleBookNowClick(event) {
         const movieId = event.target.getAttribute("data-movie-id");
 
